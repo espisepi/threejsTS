@@ -6,14 +6,15 @@ import { Scene3 } from './scene3';
 import { Scene4 } from './scene4';
 import { Scene5 } from './scene5';
 import { Scene6 } from './scene6';
-import { Scene0MaterialsVideo } from './scene0MaterialsVideo'
-import { Scene0MaterialsCar } from './scene0MaterialsCar'
+import { Scene0MaterialsVideo } from './scene0MaterialsVideo';
+import { Scene0MaterialsCar } from './scene0MaterialsCar';
+import { Scene0CustomModel } from './scene0CustomModel';
 
 
 export class App {
 
   constructor() {
-    const scene0MaterialsCar = new Scene0MaterialsCar();
+    const scene0CustomModel = new Scene0CustomModel();
   }
 
 }

@@ -11,7 +11,11 @@ export class Scene0MaterialsCar {
         antialias: true
     });
 
-    private shaderMaterial = new THREE.ShaderMaterial();
+    private carParts = {
+        body: [],
+        rims: [],
+        glass: [],
+    };
 
     constructor() {
         //this.scene.background = new THREE.Color( 0xFF0000 );
@@ -25,8 +29,12 @@ export class Scene0MaterialsCar {
         // const ambientLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 5 );
         // this.scene.add(ambientLight);
         const light = new THREE.DirectionalLight( 0xffffff );
-		light.position.set( 0.5, 1, 1 ).normalize();
-		this.scene.add( light );
+		light.position.set( 1, 1, 1 ).normalize();
+        this.scene.add( light );
+        
+        const lightLeft = new THREE.DirectionalLight( 0xffffff );
+		lightLeft.position.set( -1, 1, 1 ).normalize();
+		this.scene.add( lightLeft );
     }
 
     private createOrbitControls(): void {
@@ -35,7 +43,31 @@ export class Scene0MaterialsCar {
     }
 
     private createObjects3D(): void {
-        this.createShit();
+        //this.createShit();
+        this.createCar();
+    }
+
+    private createCar(): void {
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( this.getPath('js/libs/draco/') );
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader( dracoLoader );
+        loader.load(
+            this.getPath('models/gltf/ferrari.glb'),
+            ( gltf: any ) => {
+
+                const carModel = gltf.scene.children[ 0 ];
+                console.log(carModel.getObjectByName( 'rim_fl' ) as THREE.Mesh);
+                this.scene.add( carModel );
+
+                //carModel.getObjectByName( 'rim_fl' ) as THREE.Mesh
+                
+
+
+            },
+            () => {},
+            () => {}
+        );
     }
 
     private createShit(): void {
