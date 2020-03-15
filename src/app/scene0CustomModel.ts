@@ -14,12 +14,18 @@ export class Scene0CustomModel {
     });
 
     private chairModel: any;
+    private activeOption = 'legs';
     private TRAY = document.getElementById('js-tray-slide');
     private colors = [
         {
             texture: 'assets/img/wood_.jpg',
             size: [2, 2, 2],
             shininess: 60
+        },
+        {
+            texture: 'assets/img/fabric_.jpg',
+            size: [4, 4, 4],
+            shininess: 0
         },
         {
             color: '131417'
@@ -134,6 +140,20 @@ export class Scene0CustomModel {
         }
         buildColors(this.colors);
 
+        // div con las opciones => addEventListener( 'click', selectOption);
+        const options = document.querySelectorAll(".option");
+        const selectOption = ( e:any ) => {
+            let option = e.target;
+            this.activeOption = e.target.dataset.option;
+            options.forEach( ( element:any, index: any, array: any ) => {
+                element.classList.remove('--is-active');
+            });
+            option.classList.add('--is-active');
+        }
+        options.forEach( ( element:any, index: any, array: any ) => {
+            element.addEventListener( 'click', selectOption);
+        });
+
         // div con el color => addEventListener( 'click', selectSwatch);
         const selectSwatch = (e:any) => {
             let color = this.colors[parseInt(e.target.dataset.key)];
@@ -160,7 +180,7 @@ export class Scene0CustomModel {
 
             }
 
-            this.setMaterial(this.chairModel, 'legs', new_mtl);
+            this.setMaterial(this.chairModel, this.activeOption, new_mtl);
 
         }
 
@@ -168,10 +188,6 @@ export class Scene0CustomModel {
         swatches.forEach( ( element:any, index: any, array: any ) => {
             element.addEventListener( 'click', selectSwatch);
         });
-        
-    }
-
-    private selectWatch( e:any ): void {
         
     }
 
@@ -194,7 +210,7 @@ export class Scene0CustomModel {
             1
         );
         const floorMaterial = new THREE.MeshPhongMaterial({
-            color: 0xff0000,
+            color: 0xeeeeee,
             shininess: 0
         });
 

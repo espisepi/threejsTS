@@ -25,6 +25,46 @@
       left: 0;
     }
 
+    .options {
+    position: absolute;
+    left: 0;
+    }
+
+    .option {
+        background-size: cover;
+        background-position: 50%;
+        background-color: white;
+        margin-bottom: 3px;
+        padding: 10px;
+        height: 55px;
+        width: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .option:hover {
+        border-left: 5px solid white;
+        width: 58px;
+    }
+
+    .option.--is-active {
+        border-right: 3px solid red;
+        width: 58px;
+        cursor: default;
+    }
+
+    .option.--is-active:hover {
+        border-left: none;
+    }
+
+    .option img {
+        height: 100%;
+        width: auto;
+        pointer-events: none;
+    }
+
     .controls {
     position: absolute;
     bottom: 0;
@@ -75,6 +115,24 @@
 </head>
 
 <body>
+
+  <div class="options">
+    <div class="option --is-active" data-option="legs">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/legs.svg" alt="" />
+    </div>
+    <div class="option" data-option="cushions">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/cushions.svg" alt="" />
+    </div>
+    <div class="option" data-option="base">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/base.svg" alt="" />
+    </div>
+    <div class="option" data-option="supports">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/supports.svg" alt="" />
+    </div>
+    <div class="option" data-option="back">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/back.svg" alt="" />
+    </div>
+  </div>
 
   <div class="controls">
     <div class="info">
