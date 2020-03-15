@@ -12,6 +12,9 @@ export class Scene0CustomModel {
         canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
         antialias: true
     });
+    private controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    private LOADER = document.getElementById('js-loader');
 
     private chairModel: any;
     private activeOption = 'legs';
@@ -73,7 +76,15 @@ export class Scene0CustomModel {
     }
 
     private createOrbitControls(): void {
-        const orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+        //const controls = new OrbitControls(this.camera, this.renderer.domElement);
+        const controls = this.controls;
+        controls.maxPolarAngle = Math.PI / 2;
+        controls.minPolarAngle = Math.PI / 3;
+        controls.enableDamping = true;
+        controls.enablePan = false;
+        controls.dampingFactor = 0.1;
+        controls.autoRotate = false; // Toggle this if you'd like the chair to automatically rotate
+        controls.autoRotateSpeed = 0.2; // 30
         this.camera.position.z = 5;
         this.camera.position.x = 0;
     }
@@ -110,6 +121,7 @@ export class Scene0CustomModel {
 
                 this.scene.add( theModel );
                 this.chairModel = theModel;
+                this.LOADER?.remove();
 
             },
             () => {},
@@ -223,6 +235,8 @@ export class Scene0CustomModel {
     }
 
     private animate(): void {
+
+        this.controls.update();
 
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(() => {
