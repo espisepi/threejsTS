@@ -15,6 +15,8 @@ export class Scene0CustomModel {
     private controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     private LOADER = document.getElementById('js-loader');
+    private loaded = false;
+    private initRotate = 0;
 
     private chairModel: any;
     private activeOption = 'legs';
@@ -31,9 +33,171 @@ export class Scene0CustomModel {
             shininess: 0
         },
         {
+            texture: 'assets/img/pattern_.jpg',
+            size: [8, 8, 8],
+            shininess: 10
+        },  
+        {
+            texture: 'assets/img/denim_.jpg',
+            size: [3, 3, 3],
+            shininess: 0
+        },
+        {
+            texture: 'assets/img/quilt_.jpg',
+            size: [6, 6, 6],
+            shininess: 0 
+        },  
+        {
             color: '131417'
-        }
-    ];
+        },
+        {
+            color: '374047' },
+          
+          {
+            color: '5f6e78' },
+          
+          {
+            color: '7f8a93' },
+          
+          {
+            color: '97a1a7' },
+          
+          {
+            color: 'acb4b9' },
+          
+          {
+            color: 'DF9998' },
+          
+          {
+            color: '7C6862' },
+          
+          {
+            color: 'A3AB84' },
+          
+          {
+            color: 'D6CCB1' },
+          
+          {
+            color: 'F8D5C4' },
+          
+          {
+            color: 'A3AE99' },
+          
+          {
+            color: 'EFF2F2' },
+          
+          {
+            color: 'B0C5C1' },
+          
+          {
+            color: '8B8C8C' },
+          
+          {
+            color: '565F59' },
+          
+          {
+            color: 'CB304A' },
+          
+          {
+            color: 'FED7C8' },
+          
+          {
+            color: 'C7BDBD' },
+          
+          {
+            color: '3DCBBE' },
+          
+          {
+            color: '264B4F' },
+          
+          {
+            color: '389389' },
+          
+          {
+            color: '85BEAE' },
+          
+          {
+            color: 'F2DABA' },
+          
+          {
+            color: 'F2A97F' },
+          
+          {
+            color: 'D85F52' },
+          
+          {
+            color: 'D92E37' },
+          
+          {
+            color: 'FC9736' },
+          
+          {
+            color: 'F7BD69' },
+          
+          {
+            color: 'A4D09C' },
+          
+          {
+            color: '4C8A67' },
+          
+          {
+            color: '25608A' },
+          
+          {
+            color: '75C8C6' },
+          
+          {
+            color: 'F5E4B7' },
+          
+          {
+            color: 'E69041' },
+          
+          {
+            color: 'E56013' },
+          
+          {
+            color: '11101D' },
+          
+          {
+            color: '630609' },
+          
+          {
+            color: 'C9240E' },
+          
+          {
+            color: 'EC4B17' },
+          
+          {
+            color: '281A1C' },
+          
+          {
+            color: '4F556F' },
+          
+          {
+            color: '64739B' },
+          
+          {
+            color: 'CDBAC7' },
+          
+          {
+            color: '946F43' },
+          
+          {
+            color: '66533C' },
+          
+          {
+            color: '173A2F' },
+          
+          {
+            color: '153944' },
+          
+          {
+            color: '27548D' },
+          
+          {
+            color: '438AAC' }];
+
+
     private INITIAL_MTL = new THREE.MeshPhongMaterial({
         color: 0xf1f1f1,
         shininess: 10
@@ -53,6 +217,9 @@ export class Scene0CustomModel {
         //this.scene.fog = new THREE.Fog( 0xf1f1f1, 20, 100);
         this.renderer.shadowMap.enabled = true;
         this.renderer.setPixelRatio(window.devicePixelRatio);
+
+        this.camera.position.z = 5;
+        this.camera.position.x = 0;
 
         this.createLights();
         this.createOrbitControls();
@@ -85,8 +252,6 @@ export class Scene0CustomModel {
         controls.dampingFactor = 0.1;
         controls.autoRotate = false; // Toggle this if you'd like the chair to automatically rotate
         controls.autoRotateSpeed = 0.2; // 30
-        this.camera.position.z = 5;
-        this.camera.position.x = 0;
     }
 
     private createObjects3D(): void {
@@ -128,6 +293,17 @@ export class Scene0CustomModel {
             ( error ) => { console.log(error); }
         );
 
+    }
+
+    private initColor(parent: any, type: any, mtl: any): void {
+        parent.traverse( ( o:any ) => {
+            if ( o.isMesh ) {
+                if ( o.name.includes(type) ) {
+                    o.material = mtl;
+                    o.nameID = type;
+                }
+            }
+        });
     }
 
     private createGUI(): void {
@@ -245,6 +421,19 @@ export class Scene0CustomModel {
 
         this.adjustCanvasSize();
 
+        if ( this.chairModel != null && this.loaded == false ) {
+            this.initialRotation();
+        }
+
+    }
+
+    private initialRotation(): void {
+        this.initRotate++;
+        if (this.initRotate <= 120 ) {
+            this.chairModel.rotation.y += Math.PI / 60;
+        } else {
+            this.loaded = true;
+        }
     }
 
     private adjustCanvasSize(): void {
@@ -257,17 +446,6 @@ export class Scene0CustomModel {
     private getPath(path: string): string {
         const rootPath = '../../node_modules/three/examples/';
         return rootPath + path;
-    }
-
-    private initColor(parent: any, type: any, mtl: any): void {
-        parent.traverse( ( o:any ) => {
-            if ( o.isMesh ) {
-                if ( o.name.includes(type) ) {
-                    o.material = mtl;
-                    o.nameID = type;
-                }
-            }
-        });
     }
 
 }
