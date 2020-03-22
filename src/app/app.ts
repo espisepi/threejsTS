@@ -10,12 +10,14 @@ import { Scene7 } from './scene7';
 import { Scene0MaterialsVideo } from './scene0MaterialsVideo';
 import { Scene0MaterialsCar } from './scene0MaterialsCar';
 import { Scene0CustomModel } from './scene0CustomModel';
+import { Scene8 } from './scene8';
+import { Scene0CustomModelDynamic } from './scene0CustomModelDynamic';
 
 
 export class App {
 
   constructor() {
-    const scene7 = new Scene7();
+    const scene0CustomModelDynamic = new Scene0CustomModelDynamic();
   }
 
 }
