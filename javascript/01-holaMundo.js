@@ -25,8 +25,7 @@ scene.add( planeMesh );
 animate();
 
 function animate() {
-	requestAnimationFrame( animate );
-
 	renderer.render( scene, camera );
+	requestAnimationFrame( animate );
 };
 
