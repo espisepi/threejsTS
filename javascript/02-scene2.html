@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Scene2</title>
+		<style>
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+		<script src="js/tween/tween.umd.js"></script>
+	</head>
+	<body>
+
+	    <div id="overlay">
+			<div>
+				<button id="startButton">Click to Play</button>
+				<p>Video playback with audio requires user interaction.</p>
+			</div>
+		</div>
+        
+        <video id="video" loop crossOrigin="anonymous" playsinline style="display:none">
+			<source src="textures/charliGarcia.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
+
+		<button id="testButton">click</button>
+		
+
+		<script type="module" src="02-scene2.js"></script>
+	</body>
+</html>
