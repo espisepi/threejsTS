@@ -16,25 +16,12 @@ function main() {
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
-	scene = new THREE.Scene();
-	scene.background = new THREE.Color('black');
-
 	const fov = 45;
 	const aspect = 2;
 	const near = 1;
 	const far = 1000;
-	camera = new THREE.OrthographicCamera(
-		window.innerWidth / -2,
-		window.innerWidth / 2,
-		window.innerHeight / 2,
-		window.innerHeight / -2,
-		1,
-		1000
-	);
-	// camera.layers.set(1);
-	scene.add(camera);
-	// camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-	// camera.position.z = 10;
+	camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+	camera.position.z = 10;
 	//camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 	//camera.position.z = 5;
 
@@ -44,6 +31,9 @@ function main() {
 	controls.minDistance = 0.2;
 	controls.maxDistance = 200;
 	controls.update();
+
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color('black');
 
 	scene.add( new THREE.AmbientLight( 0x443333 ) );
 
@@ -64,14 +54,35 @@ function main() {
 	const mesh = new THREE.Mesh(geometry, material);
 	scene.add(mesh);
 
+	let current = {x: -8};
+	let update = () => {
+		mesh.position.z = current.x;
+	};
+	TWEEN.removeAll();
+
+	let tweenHead = new TWEEN.Tween(current)
+		.to({x: +8}, 2000)
+		.delay(500)
+		.easing(TWEEN.Easing.Linear.None)
+		.onUpdate(update);
 	
+	let tweenBack = new TWEEN.Tween(current)
+		.to({x: -8}, 2000)
+		.delay(500)
+		.easing(TWEEN.Easing.Linear.None)
+		.onUpdate(update);
+
+	tweenHead.chain(tweenBack);
+	tweenBack.chain(tweenHead);
+	tweenHead.start();
+
 
 }
 
 function render() {
 	renderer.render( scene, camera );
 	controls.update();
-	//TWEEN.update();
+	TWEEN.update();
 	requestAnimationFrame( render );
 };
 
@@ -91,3 +102,46 @@ function onWindowResize() {
 window.addEventListener( 'resize', onWindowResize, false );
 main();
 render();
+
+
+
+
+
+// Chuletilla
+// http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
+// http://sole.github.io/tween.js/examples/03_graphs.html
+// http://learningthreejs.com/data/tweenjs_for_smooth_animation/tweenjs_for_smooth_animation.html
+// let position = {z:0};
+// 	let target = {z:8};
+// 	let tween = new TWEEN.Tween(position).to(target, 2000)
+// 					.onUpdate(() => {
+// 						mesh.position.z = position.z;
+// 					})
+// 					.delay(500)
+// 					.easing(TWEEN.Easing.Linear.None)
+// 					.start();
+
+
+
+// Animacion infinita (concatenando dos animaciones)
+// let current = {x: -8};
+// 	let update = () => {
+// 		mesh.position.z = current.x;
+// 	};
+// 	TWEEN.removeAll();
+
+// 	let tweenHead = new TWEEN.Tween(current)
+// 		.to({x: +8}, 2000)
+// 		.delay(500)
+// 		.easing(TWEEN.Easing.Linear.None)
+// 		.onUpdate(update);
+	
+// 	let tweenBack = new TWEEN.Tween(current)
+// 		.to({x: -8}, 2000)
+// 		.delay(500)
+// 		.easing(TWEEN.Easing.Linear.None)
+// 		.onUpdate(update);
+
+// 	tweenHead.chain(tweenBack);
+// 	tweenBack.chain(tweenHead);
+// 	tweenHead.start();
